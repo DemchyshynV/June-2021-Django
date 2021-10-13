@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Users
+{% endblock %}
+
+{% block body %}
+    <h1>Hello {{ xxx }}</h1>
+    {% if check %}
+        {% for user in users %}
+            <h2>{{ user }}</h2>
+        {% endfor %}
+        {% else %}
+        <h2>Finish</h2>
+    {% endif %}
+{% endblock %}
