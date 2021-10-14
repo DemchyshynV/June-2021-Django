@@ -1,18 +1,22 @@
-from django.shortcuts import render
-
-# Create your views here.
-users_list = []
+from rest_framework.response import Response
+from rest_framework.views import APIView
 
 
-def hello(request):
-    return render(request, 'hello.html')
+class MyView(APIView):
+    def get(self, *args, **kwargs):
+        print(self.request.query_params)
+        return Response({'msg': 'Hello from GET'})
 
+    def post(self, *args, **kwargs):
+        data = self.request.data
+        print(data)
+        return Response({'msg': 'Hello from POST'})
 
-# def users(request):
-#     return render(request, 'users.html')
+    def put(self, *args, **kwargs):
+        return Response({'msg': 'Hello from PUT'})
 
-def users(request, name):
-    # print(name)
-    users_list.append(name)
-    check = False if len(users_list) > 3 else True
-    return render(request, 'users.html', {'xxx': name, 'users': users_list, 'check':check})
+    def patch(self, *args, **kwargs):
+        return Response({'msg': 'Hello from PATCH'})
+
+    def delete(self, *args, **kwargs):
+        return Response({'msg': 'Hello from DELETE'})
