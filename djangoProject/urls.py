@@ -15,10 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from myfirstapp.views import MyView
-
+from myfirstapp.views_2 import UserListCreateView, UserRetrieveUpdateDestroyView
 urlpatterns = [
     # path('admin/', admin.site.urls),
-    path('', MyView.as_view())
+    path('cars', UserListCreateView.as_view()),
+    path('cars/<int:pk>', UserRetrieveUpdateDestroyView.as_view())
 ]
 # http://localhost:8000/
