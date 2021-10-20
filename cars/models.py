@@ -1,6 +1,9 @@
 from django.db import models
 from django.core import validators as V
 
+from autopark.models import AutoParkModel
+
+
 # Create your models here.
 
 class CarModel(models.Model):
@@ -9,10 +12,8 @@ class CarModel(models.Model):
         verbose_name = 'Машины'
         verbose_name_plural = 'Машина'
 
-
-    brand = models.CharField(max_length=20, validators=[V.MinLengthValidator(3), V.MaxLengthValidator(20)])   # unique=True, null=True, default='AUDI' blank=True)
+    brand = models.CharField(max_length=20, validators=[V.MinLengthValidator(3), V.MaxLengthValidator(
+        20)])  # unique=True, null=True, default='AUDI' blank=True)
     model = models.CharField(max_length=20)
     year = models.IntegerField(validators=[V.MinValueValidator(1980), V.MinValueValidator(2021)])
-
-    def __str__(self):
-        return self.brand
+    autopark = models.ForeignKey(AutoParkModel, on_delete=models.CASCADE, related_name='cars')
