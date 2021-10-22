@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 import os
 from pathlib import Path
 
+from .extra_conf import *
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -29,6 +31,8 @@ ALLOWED_HOSTS = []
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000"
 ]
+
+AUTH_USER_MODEL = 'users.UserModel'
 # Application definition
 
 INSTALLED_APPS = [
@@ -41,9 +45,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
 
-    'autopark',
-    'cars',
-    'users',
+    'apps.autopark',
+    'apps.cars',
+    'apps.users',
+    'apps.profile'
 ]
 
 MIDDLEWARE = [
