@@ -1,7 +1,7 @@
 from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 
-from apps.profile.serializers import AddAvatarSerializer
+from apps.profile.serializers import AvatarSerializer
 from rest_framework import status
 from rest_framework.generics import GenericAPIView, ListCreateAPIView, UpdateAPIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -15,12 +15,16 @@ UserModel: User = get_user_model()
 
 class UserListView(ListCreateAPIView):
     serializer_class = UserSerializer
-    queryset = UserModel.objects.all()
+
+    # queryset = UserModel.objects.all()
 
     def get_permissions(self):
         if self.request.method == 'POST':
             return AllowAny(),
         return IsAuthenticated(),
+
+    def get_queryset(self):
+        return UserModel.objects.exclude(id=self.request.user.id)
 
 
 class UserToAdminView(GenericAPIView):
@@ -29,14 +33,23 @@ class UserToAdminView(GenericAPIView):
 
     def patch(self, *args, **kwargs):
         user = self.get_object()
-        user.is_staff = True
-        user.save()
+        UserModel.objects.to_admin(user)
+        data = UserSerializer(user).data
+        return Response(data, status.HTTP_200_OK)
+
+    def put(self, *args, **kwargs):
+        user = self.get_object()
+        UserModel.objects.to_user(user)
         data = UserSerializer(user).data
         return Response(data, status.HTTP_200_OK)
 
 
-class AddAvatarView(UpdateAPIView):
-    serializer_class = AddAvatarSerializer
+class AddAvatarView(GenericAPIView):
 
-    def get_object(self):
-        return self.request.user.profile
+    def patch(self, *args, **kwargs):
+        avatar_data = self.request.FILES.get('avatar')
+        serializer = AvatarSerializer(data={'url': avatar_data})
+        serializer.is_valid(raise_exception=True)
+        serializer.save(profile=self.request.user.profile)
+        user = UserSerializer(self.request.user).data
+        return Response(user, status.HTTP_200_OK)
