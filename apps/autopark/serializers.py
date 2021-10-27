@@ -5,7 +5,7 @@ from apps.cars.serializers import CarSerializer
 
 
 class AutoParkSerializer(ModelSerializer):
-    cars = CarSerializer(many=True)
+    cars = CarSerializer(many=True, read_only=True)
 
     class Meta:
         model = AutoParkModel

@@ -26,6 +26,9 @@ class UserListView(ListCreateAPIView):
     def get_queryset(self):
         return UserModel.objects.exclude(id=self.request.user.id)
 
+    def get_serializer_context(self):
+        return {'request':self.request}
+
 
 class UserToAdminView(GenericAPIView):
     permission_classes = (IsSuperUser,)

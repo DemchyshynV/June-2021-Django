@@ -10,6 +10,7 @@ class CarModel(models.Model):
         db_table = 'cars'
         verbose_name = 'Машины'
         verbose_name_plural = 'Машина'
+        ordering = ('id',)
 
     brand = models.CharField(max_length=20, validators=[V.MinLengthValidator(3), V.MaxLengthValidator(
         20)])  # unique=True, null=True, default='AUDI' blank=True)
