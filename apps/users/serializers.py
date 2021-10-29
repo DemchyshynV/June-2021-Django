@@ -1,8 +1,9 @@
 from django.contrib.auth import get_user_model
 
+from rest_framework.serializers import ModelSerializer
+
 from apps.profile.models import ProfileModel
 from apps.profile.serializers import ProfileSerializer
-from rest_framework.serializers import ModelSerializer
 from utils.email_utils import EmailUtils
 from utils.jwt_utils import JwtUtils
 
