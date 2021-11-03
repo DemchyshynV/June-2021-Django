@@ -13,8 +13,8 @@ Django = "==3.2.8"
 django-cors-headers = "*"
 djangorestframework-simplejwt = "*"
 pillow = "*"
-django-dotenv = "*"
 django-filter = "*"
+drf-yasg = "*"
 
 [dev-packages]
 isort = "*"
