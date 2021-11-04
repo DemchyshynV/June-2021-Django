@@ -41,6 +41,6 @@ urlpatterns = [
                   path('/cars', include('apps.cars.urls')),
                   path('/users', include('apps.users.urls')),
                   path('/autoparks', include('apps.autopark.urls')),
-                  path('', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+                  path('/doc', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
               ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 # http://localhost:8000/
